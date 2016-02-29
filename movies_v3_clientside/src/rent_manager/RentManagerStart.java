@@ -20,6 +20,9 @@ public class RentManagerStart {
 		Person developer1 = new Person("Jhon", "Carmack", Gender.MALE, 500000);
 		Person developer2 = new Person("Jhon", "Romero", Gender.MALE, 500000);
 		Person developer3 = new Person("Dave", "Taylor", Gender.MALE, 450000);
+		Person developer4 = new Person("Eros", "Pista", Gender.MALE, 40000);
+		Person developer5 = new Person("O.", "Lajos", Gender.MALE, 50000);
+		Person developer6 = new Person("Lakatos", "Feri", Gender.MALE, 40000);
 		Person actor1 = new Person("Keanu", "Reeves", Gender.MALE, 280000);
 		Person actor2 = new Person("Carrie-Anne", "Moss", Gender.FEMALE, 245000);
 		Person actor3 = new Person("Marion", "Cotillard", Gender.FEMALE, 320000);
@@ -34,6 +37,10 @@ public class RentManagerStart {
 		staff1.add(developer1);
 		staff1.add(developer2);
 		staff1.add(developer3);
+		List<Person> staff2 = new ArrayList<Person>();
+		staff2.add(developer4);
+		staff2.add(developer5);
+		staff2.add(developer6);
 
 		// Creating cast for Movie object(s)
 		List<Person> cast1 = new ArrayList<Person>();
@@ -45,7 +52,7 @@ public class RentManagerStart {
 
 		// Creating some Products
 		Game game1 = new Game("DOOM", buyer1, false, staff1, 50);
-		Game game2 = new Game("DOOM II", buyer2, true, staff1, 60);
+		Game game2 = new Game("DOOM II", buyer2, true, staff2, 60);
 		Movie movie1 = new Movie("Matrix", buyer1, Genre.SCI_FI, 120, 9.5, cast1, 25);
 		Movie movie2 = new Movie("Inception", buyer2, Genre.ACTION, 120, 9.0, cast2, 30);
 		Book book1 = new Book("Cloud Atlas", buyer1, writer1);
@@ -64,7 +71,7 @@ public class RentManagerStart {
 		client.connectToServer();
 	}
 
-	// Adds stuff to productList
+	// Adds Products to productList
 	private static void addToList(Product prod) {
 		productList.add(prod);
 	}

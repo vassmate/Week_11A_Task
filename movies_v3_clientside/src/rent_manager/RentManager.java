@@ -9,6 +9,9 @@ import java.net.Socket;
 import java.util.List;
 import java.util.Scanner;
 
+import serializable_classes.Book;
+import serializable_classes.Game;
+import serializable_classes.Movie;
 import serializable_classes.Product;
 
 public class RentManager {
@@ -72,8 +75,30 @@ public class RentManager {
 	@SuppressWarnings("unchecked")
 	private void getData() throws ClassNotFoundException, IOException {
 		List<Product> incomingList = (List<Product>) input.readObject();
-		clientMessage("Received data: ");
+		clientMessage("Received data:");
 		clientMessage(incomingList.toString());
+		clientMessage("Persons in products:");
+		printOutPersons(incomingList);
+	}
+
+	// Prints out the Persons in different products
+	private void printOutPersons(List<Product> prodList) {
+		int game_counter = 1;
+		int movie_counter = 1;
+		int book_counter = 1;
+		for (Product product : prodList) {
+			if (product instanceof Game) {
+				Game game = (Game) product;
+				clientMessage("GAM" + game_counter + " staff: " + game.getStaff().toString());
+				++game_counter;
+			} else if (product instanceof Movie) {
+				Movie movie = (Movie) product;
+				clientMessage("MOV" + movie_counter + " cast: " + movie.getCast().toString());
+			} else if (product instanceof Book) {
+				Book book = (Book) product;
+				clientMessage("BOO" + book_counter + " author: " + book.getAuthor().toString());
+			}
+		}
 	}
 
 	// Switch-case for the commands
@@ -101,28 +126,25 @@ public class RentManager {
 	// If it gets EXIT command from the user it will first send it to the
 	// server and it will break the loop just after that
 	private void whileConnsUp() throws IOException, ClassNotFoundException {
-		clientMessage("Please eneter one of these commands to proceed:" + "\n <GET, PUT, EXIT>");
-		clientMessage("" + dataIn.readUTF());
+		System.out.println("" + dataIn.readUTF());
+		clientMessage("Please eneter one of these commands to proceed:");
 		String inFromConsole = null;
 		Scanner inScan = new Scanner(System.in);
-		inFromConsole = inScan.nextLine();
 		do {
+			clientMessage("Valid commands: <GET, PUT, EXIT>");
+			inFromConsole = inScan.nextLine();
 			if (inFromConsole.equals("GET")) {
 				command = Command.GET;
 				switchToCommand();
 			} else if (inFromConsole.equals("PUT")) {
 				command = Command.PUT;
 				switchToCommand();
-			}
-			clientMessage("Enter a valid command!");
-			clientMessage("Valid commands: <GET, PUT, EXIT>");
-			inFromConsole = inScan.nextLine();
-
-			if (inFromConsole.equals("EXIT")) {
+			} else if (inFromConsole.equals("EXIT")) {
 				command = Command.EXIT;
 				switchToCommand();
+			} else {
+				clientMessage("Enter a valid command!");
 			}
-
 		} while (!(inFromConsole.equals("EXIT")));
 		inScan.close();
 	}

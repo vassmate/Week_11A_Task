@@ -14,7 +14,6 @@ import java.util.List;
 import serializable_classes.Product;
 
 public class ObjectServer {
-
 	enum ServerMode {
 		LOAD, SAVE
 	}
@@ -51,7 +50,7 @@ public class ObjectServer {
 					serverMessage("IOException raised! Server disconnected!");
 					break;
 				} catch (ClassNotFoundException e) {
-					serverMessage("Unknown object/class recieved! Serialization aborted!");
+					serverMessage("Unknown object recieved! Serialization aborted!");
 					e.printStackTrace();
 				}
 			}
@@ -87,7 +86,6 @@ public class ObjectServer {
 	}
 
 	// Load data from an existing .sr file
-	// If the file not exists sends a warning to the client
 	private void load() throws IOException {
 		serverMessage("Sending data to client from this file:");
 		serverMessage("Location: " + file);
@@ -143,7 +141,8 @@ public class ObjectServer {
 		if (file.exists()) {
 			dataOut.writeUTF("[SERVER] Save file is apparent!");
 		} else if (!(file.exists())) {
-			dataOut.writeUTF("[SERVER WARNING] Save file is not apparent! Use PUT command to save data!");
+			dataOut.writeUTF(
+					"[SERVER WARNING] Save file is not apparent!" + "\n[SERVER WARNING] Use PUT command to save data!");
 		}
 	}
 
